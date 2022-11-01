@@ -20,6 +20,10 @@
       "@components/*": ["src/components/*"],
       "@containers": ["src/containers"],
       "@containers/*": ["src/containers/*"],
+      "@public": ["public"],
+      "@public/*": ["public/*"],
+      "@interfaces": ["src/interfaces"],
+      "@interfaces/*": ["src/interfaces/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
