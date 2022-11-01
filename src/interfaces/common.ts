@@ -51,7 +51,7 @@ export interface LoginRequest {
   platformType?: number
   platformVersion?: string
   deviceId?: string
-  pnsToken?: string
+  deviceToken?: string
 }
 export interface UpdatePasswordRequest {
   oldPassword: string
@@ -101,37 +101,83 @@ export interface SignupResponse {
   suburb?: string
   about?: string
 }
-export interface User {
-    address?: string
-    afslNumber?: string
-    businessTypes?: BusinessTypes[]
-    companyName?: string
-    country?: string
-    displayName?: string
-    dob?: number | Dayjs
-    email?: string
-    emailEnquiry?: string
-    emailNewsAnnouncements?: boolean
-    emailSearchesWeekly?: boolean
-    firstName?: string
-    id?: number
-    lastName?: string
-    location?: string
-    mediaAvatar?: MediaAvatar
-    avatarMediaId?: number
-    mobile?: string
-    postcode?: string
-    prismAccountId?: number
-    roles?: Role[]
-    state?: string
-    status?: number
-    suburb?: string
-    username?: string
-    about?: string
+export interface TrainerResponse{
+  id: number
+  name: string
+}
+export interface featureResponse {
+  id: number
+  featureKey: string
+  featureLabel: string
+  group: string
+  version?: string
+}
+export interface Permission {
+  permission: number
+  trainers: TrainerResponse[]
+  feature: featureResponse[]
+}
+export interface locationProps {
+  id: number
+  name: string
+}
+export interface EmailProps {
+  id: number
+  email: string
+  primary: boolean
+  verify?: boolean
+  verifyCode?: string
+}
+export interface ContactProps {
+  id?: number
+  abn?: string
+  acountName?: string
+  addressLine1?: string
+  addressLine2?: string
+  avatar?: string
+  bsb?: string,
+  company?: string
+  email?: string
+  fax?: string
+  fullAddress?: string
+  dob?: number | Dayjs
+  isGstRegistered?: boolean
+  logo?:string
+  mobile?: number
+  name?: string
+  paymentNote?: string
+  postcode?: string
+  region?: string
+  state?: string
+  suburb?: string
+  website?: string
+}
+export interface Account {
+  id?: number
+  address?: string
+  permission: Permission[]
+  firstName?: string
+  lastName?: string
+  displayName?: string
+  locationData?: locationProps
+  companyName?: string
+  location?: string
+  mobile?: string
+  name?:string
+  dob?: number | Dayjs
+  emails?: EmailProps[]
+  postcode?: string
+  prismId?: string
+  stable?: string
+  state?: string
+  trainerId?: number
+  username: string
+  contact?: ContactProps 
+  avatar?: string
 }
 export interface LoginResponse {
-  token: Token
-  user: User
+  token: string
+  account: Account
 }
 export interface UploadMediaRequest {
   newToken?: boolean

@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Button, Form, Input } from "antd";
 import { getLocalStorage, StorageKeys } from "src/network/storage";
 import { isEmpty } from "lodash";
 import { login, fingerPrint } from "src/network/services";
 import md5 from "md5";
-import { LoginRequest, User } from "@interfaces";
+import { LoginRequest, Account } from "@interfaces";
 import { useLocalStorage } from 'react-use'
 
 export default Login;
@@ -13,7 +13,8 @@ export default Login;
 function Login() {
   const router = useRouter();
   const [, setUserToken] = useLocalStorage(StorageKeys.TOKEN)
-  const [, setUserInfo] = useLocalStorage<User>(StorageKeys.USER_INFO)
+  const [, setUserInfo] = useLocalStorage<Account>(StorageKeys.USER_INFO)
+  const [loading, setLoading] = useState<boolean>(false)
   useEffect(() => {
     // redirect to home if already logged in
     const token = getLocalStorage<string>(StorageKeys.TOKEN);
@@ -23,22 +24,24 @@ function Login() {
   }, []);
 
   const onFinish = async (data: LoginRequest) => {
+    setLoading(true)
     const deviceId = await fingerPrint();
     const request: LoginRequest = {
       username: data.username,
       password: md5(data.password),
       platformType: 3,
       platformVersion: "1.0",
-      pnsToken: deviceId,
+      deviceToken: deviceId,
       deviceId,
     };
     const resp = await login(request)
     const userDataResp = resp?.data?.responseData
-    const error = resp?.data?.error
     if(userDataResp){
-      setUserToken(userDataResp?.token?.access_token)
-      setUserInfo(userDataResp?.user)
+      setUserToken(userDataResp?.token)
+      setUserInfo(userDataResp?.account)
+      router.push("/")
     }
+    setLoading(false)
   };
 
   return (
@@ -62,7 +65,7 @@ function Login() {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" loading={loading} htmlType="submit">
               Submit
             </Button>
           </Form.Item>

@@ -13,10 +13,15 @@ axiosInstance.defaults.timeout = 60000;
 axiosInstance.interceptors.request.use(
   function (config) {
     if (typeof window !== 'undefined') {
-      const token = getLocalStorage<string>(StorageKeys.TOKEN);
-      if (!isEmpty(token) && config.headers && !config.headers['Authorization']) {
-        config.headers['Authorization'] = `Bearer ${token}`;
-      }
+      if(window.location.pathname == '/login'){
+        config.headers['X-Auth-Username'] = config.data.username;
+        config.headers['X-Auth-Password'] = config.data.password;
+      }else{
+        const token = getLocalStorage<string>(StorageKeys.TOKEN);
+        if (!isEmpty(token) && config.headers && !config.headers['Authorization']) {
+          config.headers['Authorization'] = `Bearer ${token}`;
+        }
+      }      
       return config;
     }
     return config;
@@ -36,11 +41,11 @@ axiosInstance.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     const statusCode = error?.response?.status;
-    // if (statusCode === StatusCodes.UNAUTHORIZED) {
-    //   //if user uses wrong or expired token, clear it then reload
-    //   clearStorage();
-    //   window.location.reload();
-    // }
+    if (statusCode === StatusCodes.UNAUTHORIZED) {
+      //if user uses wrong or expired token, clear it then reload
+      clearStorage();
+      window.location.reload();
+    }
     return Promise.reject(error);
   },
 );
