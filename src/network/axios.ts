@@ -3,8 +3,7 @@ import { StorageKeys, getLocalStorage, clearStorage } from './storage';
 import { StatusCodes } from 'http-status-codes';
 import { isEmpty } from 'lodash';
 
-const API_URL = process.env.PRISM_API_URL;
-
+const API_URL = process.env.NEXT_PUBLIC_API_HOST_URL;
 const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 30000,
@@ -37,11 +36,11 @@ axiosInstance.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     const statusCode = error?.response?.status;
-    if (statusCode === StatusCodes.UNAUTHORIZED) {
-      //if user uses wrong or expired token, clear it then reload
-      clearStorage();
-      window.location.reload();
-    }
+    // if (statusCode === StatusCodes.UNAUTHORIZED) {
+    //   //if user uses wrong or expired token, clear it then reload
+    //   clearStorage();
+    //   window.location.reload();
+    // }
     return Promise.reject(error);
   },
 );
