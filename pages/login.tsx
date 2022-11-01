@@ -7,6 +7,7 @@ import { login, fingerPrint } from "src/network/services";
 import md5 from "md5";
 import { LoginRequest, Account } from "@interfaces";
 import { useLocalStorage } from 'react-use'
+import axios from 'axios';
 
 export default Login;
 
@@ -23,25 +24,40 @@ function Login() {
     }
   }, []);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
   const onFinish = async (data: LoginRequest) => {
     setLoading(true)
     const deviceId = await fingerPrint();
     const request: LoginRequest = {
-      username: data.username,
-      password: md5(data.password),
       platformType: 3,
       platformVersion: "1.0",
       deviceToken: deviceId,
       deviceId,
     };
-    const resp = await login(request)
-    const userDataResp = resp?.data?.responseData
-    if(userDataResp){
-      setUserToken(userDataResp?.token)
-      setUserInfo(userDataResp?.account)
-      router.push("/")
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Auth-Username': data.username,
+      'X-Auth-Password' : md5(data.password)
     }
-    setLoading(false)
+    
+    axios.post(API_URL+'/login', request, {
+      headers: headers
+    })
+    .then((response) => {
+      console.log(response)
+      const userDataResp = response?.data?.responseData
+      if(userDataResp){
+        setUserToken(userDataResp?.token)
+        setUserInfo(userDataResp?.account)
+        router.push("/")
+      }
+      setLoading(false)
+    })
+    .catch((error) => {
+      
+    })
+    
   };
 
   return (

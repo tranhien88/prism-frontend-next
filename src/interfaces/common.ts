@@ -46,7 +46,7 @@ export interface BaseResponseData<T> {
 }
 
 export interface LoginRequest {
-  username: string
+  username?: string
   password?: any
   platformType?: number
   platformVersion?: string
