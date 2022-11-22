@@ -45,7 +45,6 @@ function Login() {
       headers: headers
     })
     .then((response) => {
-      console.log(response)
       const userDataResp = response?.data?.responseData
       if(userDataResp){
         setUserToken(userDataResp?.token)
