@@ -15,7 +15,7 @@ export default function Header() {
     <Menu mode="horizontal" defaultSelectedKeys={["mail"]}>
       <Menu.Item key="home">
         <Link href={"/"}>
-          <Image src={Logo} />
+          <Image src={Logo} alt='Logo'/>
         </Link>
       </Menu.Item>
       <Menu.Item key="horse">
