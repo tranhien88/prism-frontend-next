@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@fingerprintjs/fingerprintjs": "^3.3.6",
     "@types/md5": "^2.3.2",
     "antd": "^4.23.6",

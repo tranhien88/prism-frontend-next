@@ -22,7 +22,7 @@ function Login() {
     if (!isEmpty(token)) {
       router.push("/");
     }
-  }, []);
+  });
 
   const API_URL = process.env.NEXT_PUBLIC_API_HOST_URL;
 

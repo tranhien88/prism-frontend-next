@@ -174,6 +174,7 @@ export interface Account {
   username: string
   contact?: ContactProps 
   avatar?: string
+  roles?: string[]
 }
 export interface LoginResponse {
   token: string
@@ -261,5 +262,84 @@ export interface OrderByItem {
   orderDirection?: OrderDirection
   name?: string
   image?: string
+}
+
+export interface barnBoxProps {
+  id?: number,
+  name?: string, 
+  email?: string, 
+  bookingStatus?: number
+}
+
+export interface HorseProfileProps {
+  age?: string
+  archivedDate?: number
+  attachedDate?: number
+  attachedTo?: any
+  avatar?: string
+  avatarFullSize?: string
+  barn?: barnBoxProps
+  box?: string
+  boxInfo?: barnBoxProps
+  code?: number
+  colourId?: number
+  colourName?: string
+  country?: string
+  countryName?: string
+  dam?: string
+  foaled?: number
+  harnessCode?: number
+  horseLocation?: string
+  horseShareId?: number 
+  horseSubType?: number 
+  horseType?: number
+  id: number
+  isArchived?: number
+  is_unregistered_trainer?: boolean
+  location?: string
+  locationData?: {
+    id?: number
+    name?: string
+  }
+  masterAccountId?: string
+  mediaNotUpdated?: boolean
+  mediaNotUpdatedDays?: number
+  merging?: null
+  microchipNumber?: string
+  name?: string
+  nickName?: string
+  no_trainer?: boolean
+  ownerStatus?: string
+  pedigree?: string
+  racingColours ?: string
+  searchValue?: string
+  serviceFee?: number
+  sex?: string
+  sexString?: string
+  shareHorseLocation?: boolean
+  shareOwnership?: boolean
+  sharedFrom?: {
+    id: number
+    name?: string
+    stableName?: string
+  } 
+  sharedStatus?: boolean 
+  sire?: string
+  status?: number
+  statusData?: {
+    id?: number
+    name?: string
+    sort?: number
+  }
+  syndicator?: TrainerResponse
+  trainer?: TrainerResponse
+  trainerId?: number 
+  trainerName?: string
+  training_status?: number
+  unregisteredTrainer?: boolean
+}
+
+export interface StaffProfileProps{
+  
 }
 
